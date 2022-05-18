@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import auth from '../firebase.init';
+import CompleteTaskModal from './CompleteTaskModal';
 import Loading from './Loading';
 import Task from './Task';
 
 const Main = () => {
     const [user, loading] = useAuthState(auth);
+    const [completeTask, setCompleteTask] = useState(null);
 
     const { data: tasks, isLoading, refetch } = useQuery(["tasks", user], () => fetch(`http://localhost:5000/task/${user?.email}`).then(res => res.json()))
     if (loading || isLoading) {
@@ -72,11 +74,19 @@ const Main = () => {
                                         key={task._id}
                                         task={task}
                                         index={index}
+                                        setCompleteTask={setCompleteTask}
+                                        refetch={refetch}
                                     ></Task>)
                                 }
                             </tbody>
                         </table>
                     </div>
+                    {
+                        completeTask &&
+                        <CompleteTaskModal
+                            setCompleteTask={setCompleteTask}
+                            completeTask={completeTask} />
+                    }
                 </div>
             </div>
         </div>
