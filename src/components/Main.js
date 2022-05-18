@@ -1,15 +1,50 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
+import auth from '../firebase.init';
+import Loading from './Loading';
 
 const Main = () => {
+    const [user, loading] = useAuthState(auth);
+    if (loading) {
+        return <Loading />
+    }
+    const handleTask = e => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const description = e.target.description.value;
+        const task = {
+            name,
+            description,
+            email: user?.email
+        }
+        fetch("http://localhost:5000/task", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(task)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged && data.insertedId) {
+                    toast.success("Task added!");
+                    console.log(data);
+                    e.target.reset();
+                }
+            })
+    }
+
     return (
         <div>
             <h2 className='md:text-4xl text-xl font-bold text-primary my-5'>Welcome to Master To Do</h2>
             <div className='lg:flex justify-center items-center'>
                 <div className='flex-1'>
                     <h3 className="text-xl text-secondary my-2">Add a new task.</h3>
-                    <form action="">
-                        <input type="text" placeholder="Type task name" class="input input-bordered w-full lg:max-w-lg max-w-xs mb-1" />
-                        <textarea class="textarea textarea-bordered w-full lg:max-w-lg max-w-xs mb-1" placeholder="Description about task"></textarea>
+                    <form onSubmit={handleTask}>
+                        <input name="name" type="text" placeholder="Type task name" class="input input-bordered w-full lg:max-w-lg max-w-xs mb-1" />
+                        <textarea name="description" class="textarea textarea-bordered w-full lg:max-w-lg max-w-xs mb-1" placeholder="Description about task"></textarea>
                         <input type="submit" class="input input-bordered w-full max-w-xs lg:max-w-lg btn-primary font-bold text-white" value="Add Task" />
                     </form>
 
