@@ -5,6 +5,7 @@ import Register from './components/Register'
 import Login from './components/Login'
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

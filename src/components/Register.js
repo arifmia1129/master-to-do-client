@@ -45,7 +45,7 @@ const Register = () => {
         <div className='flex justify-center items-center h-4/5'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="text-2xl font-bold text-secondary text-center">Sign Up</h2>
+                    <h2 className="text-2xl font-bold text-secondary text-center">Resister</h2>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
 
