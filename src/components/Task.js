@@ -1,9 +1,12 @@
 import React from 'react';
 
-const Task = ({ task, index, setCompleteTask }) => {
+const Task = ({ task, index, setCompleteTask, setDeleteTask }) => {
     const { name, description, completeStatus } = task;
-    const handleCompleteStatus = () => {
+    const handleCompleteTask = () => {
         setCompleteTask(task);
+    }
+    const handleDeleteTask = () => {
+        setDeleteTask(task);
     }
     return (
         <tr>
@@ -11,8 +14,8 @@ const Task = ({ task, index, setCompleteTask }) => {
             <td className={completeStatus && "line-through"}>{name} {completeStatus}</td>
             <td>{description}</td>
             <td>
-                <label onClick={handleCompleteStatus} for="my-modal-5" class="btn modal-button btn-xs btn-success mr-2">Complete</label>
-                <button className='btn btn-xs btn-error'>Delete</button>
+                <label onClick={handleCompleteTask} for="my-complete-modal" class="btn modal-button btn-xs btn-success mr-2">Complete</label>
+                <label onClick={handleDeleteTask} for="my-delete-modal" class="btn modal-button btn-xs btn-error">Delete</label>
             </td>
         </tr>
     );

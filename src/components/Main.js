@@ -4,20 +4,24 @@ import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import auth from '../firebase.init';
 import CompleteTaskModal from './CompleteTaskModal';
+import DeleteTaskModal from './DeleteTaskModal';
 import Loading from './Loading';
 import Task from './Task';
 
 const Main = () => {
     const [user, loading] = useAuthState(auth);
+    const [load, setLoad] = useState(false);
     const [completeTask, setCompleteTask] = useState(null);
+    const [deleteTask, setDeleteTask] = useState(null);
 
     const { data: tasks, isLoading, refetch } = useQuery(["tasks", user], () => fetch(`http://localhost:5000/task/${user?.email}`).then(res => res.json()))
-    if (loading || isLoading) {
+    if (loading || isLoading || load) {
         return <Loading />
     }
 
     const handleTask = e => {
         e.preventDefault();
+        setLoad(true);
         const name = e.target.name.value;
         const description = e.target.description.value;
         const task = {
@@ -36,16 +40,16 @@ const Main = () => {
             .then(data => {
                 if (data.acknowledged && data.insertedId) {
                     toast.success("Task added!");
-                    console.log(data);
                     e.target.reset();
                     refetch();
+                    setLoad(false);
                 }
             })
     }
 
     return (
         <div>
-            <h2 className='md:text-4xl text-xl font-bold text-primary my-5'>Welcome to Master To Do {tasks.length}</h2>
+            <h2 className='md:text-4xl text-xl font-bold text-primary my-5'>Welcome to Master To Do</h2>
             <div className='lg:flex justify-center items-center'>
                 <div className='flex-1'>
                     <h3 className="text-xl text-secondary my-2">Add a new task.</h3>
@@ -75,20 +79,29 @@ const Main = () => {
                                         task={task}
                                         index={index}
                                         setCompleteTask={setCompleteTask}
-                                        refetch={refetch}
+                                        setDeleteTask={setDeleteTask}
                                     ></Task>)
                                 }
                             </tbody>
                         </table>
                     </div>
-                    {
-                        completeTask &&
-                        <CompleteTaskModal
-                            setCompleteTask={setCompleteTask}
-                            completeTask={completeTask} />
-                    }
+
                 </div>
             </div>
+            {
+                completeTask &&
+                <CompleteTaskModal
+                    setCompleteTask={setCompleteTask}
+                    completeTask={completeTask}
+                    refetch={refetch} />
+            }
+            {
+                deleteTask &&
+                <DeleteTaskModal
+                    setDeleteTask={setDeleteTask}
+                    deleteTask={deleteTask}
+                    refetch={refetch} />
+            }
         </div>
     );
 };
