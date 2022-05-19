@@ -14,7 +14,7 @@ const Main = () => {
     const [completeTask, setCompleteTask] = useState(null);
     const [deleteTask, setDeleteTask] = useState(null);
 
-    const { data: tasks, isLoading, refetch } = useQuery(["tasks", user], () => fetch(`http://localhost:5000/task/${user?.email}`).then(res => res.json()))
+    const { data: tasks, isLoading, refetch } = useQuery(["tasks", user], () => fetch(`https://lit-hamlet-83813.herokuapp.com/task/${user?.email}`).then(res => res.json()))
     if (loading || isLoading || load) {
         return <Loading />
     }
@@ -29,7 +29,7 @@ const Main = () => {
             description,
             email: user?.email
         }
-        fetch("http://localhost:5000/task", {
+        fetch("https://lit-hamlet-83813.herokuapp.com/task", {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -54,16 +54,16 @@ const Main = () => {
                 <div className='flex-1'>
                     <h3 className="text-xl text-secondary my-2">Add a new task.</h3>
                     <form onSubmit={handleTask}>
-                        <input name="name" type="text" placeholder="Type task name" class="input input-bordered w-full lg:max-w-lg max-w-xs mb-1" />
-                        <textarea name="description" class="textarea textarea-bordered w-full lg:max-w-lg max-w-xs mb-1" placeholder="Description about task"></textarea>
-                        <input type="submit" class="input input-bordered w-full max-w-xs lg:max-w-lg btn-primary font-bold text-white" value="Add Task" />
+                        <input name="name" type="text" placeholder="Type task name" className="input input-bordered w-full lg:max-w-lg max-w-xs mb-1" />
+                        <textarea name="description" className="textarea textarea-bordered w-full lg:max-w-lg max-w-xs mb-1" placeholder="Description about task"></textarea>
+                        <input type="submit" className="input input-bordered w-full max-w-xs lg:max-w-lg btn-primary font-bold text-white" value="Add Task" />
                     </form>
 
                 </div>
-                <div class="overflow-x-auto flex-1">
+                <div className="overflow-x-auto flex-1">
                     <h3 className="text-xl text-secondary my-2">Your all task that you added.</h3>
-                    <div class="overflow-x-auto">
-                        <table class="table table-zebra w-full">
+                    <div className="overflow-x-auto">
+                        <table className="table table-zebra w-full">
                             <thead>
                                 <tr>
                                     <th>#</th>

@@ -12,13 +12,15 @@ const Navbar = () => {
     }
     return (
         <div className='flex items-center justify-center'>
-            <NavLink to="/" className={({ isActive }) => isActive ? "btn btn-secondary text-white mx-5 my-5" : "mx-5 my-5"}>My-Task</NavLink>
+            {
+                user && <NavLink to="/" className={({ isActive }) => isActive ? "btn btn-secondary text-white mx-5 my-5" : "mx-5 my-5"}>My-Task</NavLink>
+            }
             {
                 user ? <button
                     onClick={() => {
                         signOut(auth)
                     }}
-                    className="btn btn-xs mx-5 my-5 uppercase text-white">Sign Out</button> : <NavLink to="/login" className={({ isActive }) => isActive ? "btn btn-secondary text-white mx-5 my-5" : "mx-5 my-5"}>Login</NavLink>
+                    className="btn btn-xs mr-3 my-5 uppercase text-white">Sign Out</button> : <NavLink to="/login" className={({ isActive }) => isActive ? "btn btn-secondary text-white mr-3 my-5" : "mr-3 my-5"}>Login</NavLink>
             }
             {
                 user && <button className='btn btn-xs btn-disabled text-red-700'>{user?.displayName}</button>

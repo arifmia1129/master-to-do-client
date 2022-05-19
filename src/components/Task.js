@@ -14,8 +14,10 @@ const Task = ({ task, index, setCompleteTask, setDeleteTask }) => {
             <td className={completeStatus && "line-through"}>{name} {completeStatus}</td>
             <td>{description}</td>
             <td>
-                <label onClick={handleCompleteTask} for="my-complete-modal" class="btn modal-button btn-xs btn-success mr-2">Complete</label>
-                <label onClick={handleDeleteTask} for="my-delete-modal" class="btn modal-button btn-xs btn-error">Delete</label>
+                {
+                    !completeStatus && <label onClick={handleCompleteTask} htmlFor="my-complete-modal" className="btn modal-button btn-xs btn-success mr-2">Complete</label>
+                }
+                <label onClick={handleDeleteTask} htmlFor="my-delete-modal" className="btn modal-button btn-xs btn-error">Delete</label>
             </td>
         </tr>
     );

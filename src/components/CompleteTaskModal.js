@@ -10,7 +10,7 @@ const CompleteTaskModal = ({ completeTask, setCompleteTask, refetch }) => {
     }
     const handleComplete = () => {
         setLoading(true);
-        fetch(`http://localhost:5000/task/${_id}`, {
+        fetch(`https://lit-hamlet-83813.herokuapp.com/task/${_id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json"
@@ -29,14 +29,14 @@ const CompleteTaskModal = ({ completeTask, setCompleteTask, refetch }) => {
     }
     return (
         <div>
-            <input type="checkbox" id="my-complete-modal" class="modal-toggle" />
-            <div class="modal">
-                <div class="modal-box w-11/12 max-w-5xl">
-                    <h3 class="font-bold text-lg text-red-500">Are you sure complete this task?</h3>
-                    <p class="py-4">If you confirmed thorough strike on this task.</p>
-                    <div class="modal-action">
-                        <label onClick={handleComplete} for="my-complete-modal" class="btn btn-error text-white">Yes</label>
-                        <label onClick={() => setCompleteTask(null)} for="my-complete-modal" class="btn btn-success text-white">No</label>
+            <input type="checkbox" id="my-complete-modal" className="modal-toggle" />
+            <div className="modal">
+                <div className="modal-box w-11/12 max-w-5xl">
+                    <h3 className="font-bold text-lg text-red-500">Are you sure complete this task?</h3>
+                    <p className="py-4">If you confirmed thorough strike on this task.</p>
+                    <div className="modal-action">
+                        <label onClick={handleComplete} htmlFor="my-complete-modal" className="btn btn-error text-white">Yes</label>
+                        <label onClick={() => setCompleteTask(null)} htmlFor="my-complete-modal" className="btn btn-success text-white">No</label>
                     </div>
                 </div>
             </div>
