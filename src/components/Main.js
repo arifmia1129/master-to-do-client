@@ -14,7 +14,7 @@ const Main = () => {
     const [completeTask, setCompleteTask] = useState(null);
     const [deleteTask, setDeleteTask] = useState(null);
 
-    const { data: tasks, isLoading, refetch } = useQuery(["tasks", user], () => fetch(`https://lit-hamlet-83813.herokuapp.com/task/${user?.email}`).then(res => res.json()))
+    const { data: tasks, isLoading, refetch } = useQuery(["tasks", user], () => fetch(`https://master-to-do-server.onrender.com/task/${user?.email}`).then(res => res.json()))
     if (loading || isLoading || load) {
         return <Loading />
     }
@@ -29,7 +29,7 @@ const Main = () => {
             description,
             email: user?.email
         }
-        fetch("https://lit-hamlet-83813.herokuapp.com/task", {
+        fetch("https://master-to-do-server.onrender.com/task", {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -74,7 +74,7 @@ const Main = () => {
                             </thead>
                             <tbody>
                                 {
-                                    tasks.map((task, index) => <Task
+                                    tasks?.map((task, index) => <Task
                                         key={task._id}
                                         task={task}
                                         index={index}

@@ -10,7 +10,7 @@ const CompleteTaskModal = ({ completeTask, setCompleteTask, refetch }) => {
     }
     const handleComplete = () => {
         setLoading(true);
-        fetch(`https://lit-hamlet-83813.herokuapp.com/task/${_id}`, {
+        fetch(`https://master-to-do-server.onrender.com/task/${_id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json"
